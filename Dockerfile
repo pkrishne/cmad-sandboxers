@@ -7,14 +7,14 @@ COPY . /opt/
 
 RUN  mvn package
 
-FROM java:8
+FROM java:8-jre-alpine
 
 WORKDIR /opt
 
-COPY --from=build /opt/target/*.jar .
-
-COPY --from=build /opt/ .
-
-CMD ["java -jar *.jar"]
+COPY --from=build /opt/target/*.jar app
 
 EXPOSE 8080
+
+CMD java -jar app
+
+
