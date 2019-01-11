@@ -35,6 +35,18 @@ public class EventCounters {
 		this.notification_count = notification_count;
 	}
 
+	public void incError() {
+		this.error_count++;
+	}
+
+	public void incWarn() {
+		this.warning_count++;
+	}
+
+	public void incNotif() {
+		this.notification_count++;
+	}
+
 	@Override
 	public String toString() {
 		return "EventCounters [error_count=" + error_count + ", warning_count=" + warning_count
