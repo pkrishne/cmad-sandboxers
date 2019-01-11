@@ -13,6 +13,6 @@ WORKDIR /opt
 
 EXPOSE 8080
 
-COPY --from=build /opt/cmad-sandboxers/target/cmad-sandboxers.jar .
+COPY --from=build /opt/target/cmad-sandboxers.jar .
 
 CMD "java -jar target/cmad-sandboxers.jar"
