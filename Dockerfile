@@ -7,12 +7,12 @@ COPY . /opt/
 
 RUN  mvn package
 
-FROM java
+FROM java:8
 
 WORKDIR /opt
 
 COPY --from=build /opt/target/cmad-sandboxers.jar .
 
-CMD "java -jar cmad-sandboxers.jar"
+CMD java -jar *.jar
 
 EXPOSE 8080
