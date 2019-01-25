@@ -1,22 +1,17 @@
 package com.cmad.sandboxers.service;
 
-import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
-
-import javax.transaction.Transactional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 
 import com.cmad.sandboxers.api.EventAPI;
 import com.cmad.sandboxers.data.EventRepository;
 import com.cmad.sandboxers.model.EventCounters;
 import com.cmad.sandboxers.model.EventType;
 import com.cmad.sandboxers.model.EventV1;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 /**
  * 

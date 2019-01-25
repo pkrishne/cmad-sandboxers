@@ -1,16 +1,14 @@
 package com.cmad.sandboxers.data;
 
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.stereotype.Repository;
-
-import java.sql.Date;
 import java.util.List;
 
 import com.cmad.sandboxers.model.EventType;
 import com.cmad.sandboxers.model.EventV1;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.stereotype.Repository;
 
 /**
  * 
