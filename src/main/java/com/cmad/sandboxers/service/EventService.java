@@ -1,6 +1,7 @@
 package com.cmad.sandboxers.service;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,20 +25,26 @@ public class EventService implements EventAPI {
 	@Autowired
 	private EventRepository eventRepo;
 	
-	public Page<EventV1> getEventList(int hours) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public String getEventCounters(int hours) {
+	public List<EventV1> getEventList(int hours) {
 		long millis=System.currentTimeMillis();
 		long inmilli=hours*3600000;
 
-		Date dt=new Date(millis-inmilli);
+
+		List<EventV1> eventList = new ArrayList<EventV1>();
+		eventList=eventRepo.findByTimestampAfter(millis-inmilli);
+		return eventList;
+	}
+
+	public EventCounters getEventCounters(int hours) {
+		long millis=System.currentTimeMillis();
+		long inmilli=hours*3600000;
+
 		EventCounters ecnt=new EventCounters();
 
-		List<EventV1> eventList=eventRepo.findByDateAfter(dt);
+		List<EventV1> eventList=eventRepo.findByTimestampAfter(millis-inmilli);
+		//List<EventV1> eventList=eventRepo.findAll();
 		for (EventV1 e : eventList) {
+			System.out.print(e);
 			EventType et= e.getEvent_type();
 			switch(et.getType()) {
 				case "ERROR":
@@ -53,7 +60,7 @@ public class EventService implements EventAPI {
 			}
 		}
 
-		return ecnt.toString();
+		return ecnt;
 	}
 
 }

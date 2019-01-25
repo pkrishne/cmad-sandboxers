@@ -2,6 +2,7 @@ package com.cmad.sandboxers.api;
 
 import java.util.List;
 
+import com.cmad.sandboxers.model.EventCounters;
 import com.cmad.sandboxers.model.EventV1;
 
 /**
@@ -24,6 +25,6 @@ public interface EventAPI {
 	 * @param hours, specifies the number of hours for which the event counters has to be returned.
 	 * @return
 	 */
-	public String getEventCounters(int hours);
+	public EventCounters getEventCounters(int hours);
 
 }

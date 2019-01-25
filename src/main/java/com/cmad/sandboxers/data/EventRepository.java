@@ -22,6 +22,7 @@ public interface EventRepository extends CrudRepository<EventV1, Integer> {
     public Page<EventV1> findByEventType(EventType eventtype, Pageable pageable);
     public Page<EventV1> findBySource(String source, Pageable pageable);
     public Page<EventV1> findById(Integer Id, Pageable pageable);
-    public Page<EventV1> findByDateAfter(Date date, Pageable pageable);
-    public List<EventV1> findByDateAfter(Date date);
+    public Page<EventV1> findByTimestampAfter(Long timestamp, Pageable pageable);
+    public List<EventV1> findByTimestampAfter(Long l);
+    public List<EventV1> findAll();
 }
