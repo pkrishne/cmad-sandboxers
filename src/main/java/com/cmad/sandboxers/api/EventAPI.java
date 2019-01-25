@@ -1,5 +1,8 @@
 package com.cmad.sandboxers.api;
 
+
+import org.springframework.data.domain.Pageable;
+
 import java.util.List;
 
 import com.cmad.sandboxers.model.EventCounters;
@@ -18,7 +21,7 @@ public interface EventAPI {
 	 * we can filter for only whole number of hours, like 1,2,3 and so on, not possible for 1.5 or 1.7 like that
 	 * @return
 	 */
-	public List<EventV1> getEventList(int hours);
+	public List<EventV1> getEventList(int hours, Pageable pageInfo);
 	
 	/**
 	 * 

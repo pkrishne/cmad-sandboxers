@@ -4,8 +4,12 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.cmad.sandboxers.api.EventAPI;
@@ -24,18 +28,19 @@ public class EventService implements EventAPI {
 
 	@Autowired
 	private EventRepository eventRepo;
-	
-	public List<EventV1> getEventList(int hours) {
-		long epochCur=System.currentTimeMillis()/1000;
 
-		long inTime=hours*3600;
+	@Override
+	public List<EventV1> getEventList(int hours, Pageable pageInfo) {
+		long epochCur = System.currentTimeMillis() / 1000;
 
-		//System.out.print(epochCur-inTime);
-		List<EventV1> eventList = new ArrayList<EventV1>();
-		eventList=eventRepo.findByTimestampAfter(epochCur-inTime);
+		long inTime = hours * 3600;
+
+		// System.out.print(epochCur-inTime);
+		//List<EventV1> eventList = new ArrayList<EventV1>();
+		Page<EventV1> eventList3 = eventRepo.findByTimestampAfter((epochCur - inTime), pageInfo);
 
 		//System.out.print(eventList);
-		return eventList;
+		return eventList3.getContent();
 	}
 
 	public EventCounters getEventCounters(int hours) {
@@ -77,5 +82,6 @@ public class EventService implements EventAPI {
 
 		return ecnt;
 	}
+
 
 }

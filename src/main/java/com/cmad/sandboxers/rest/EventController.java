@@ -44,8 +44,8 @@ public class EventController {
 	 * @return
 	 */
 	@RequestMapping(value = "/events", method = RequestMethod.GET)
-	public ResponseEntity<List<EventV1>> getEvents(@RequestParam(value="hours",required=false) Integer hours) {
-		List<EventV1> e=service.getEventList(hours);
+	public ResponseEntity<List<EventV1>> getEvents(@RequestParam(value="hours",required=false) Integer hours, Pageable pageinfo) {
+		List<EventV1> e=service.getEventList(hours, pageinfo);
 
 		return new ResponseEntity<List<EventV1>>(e,HttpStatus.OK);
 	}
