@@ -7,12 +7,14 @@ COPY . /opt/
 
 RUN  mvn package
 
-FROM java
+FROM java:8-jre-alpine
 
 WORKDIR /opt
 
+COPY --from=build /opt/target/*.jar app
+
 EXPOSE 8080
 
-COPY --from=build /opt/target/cmad-sandboxers.jar .
+CMD java -jar app
 
-CMD "java -jar target/cmad-sandboxers.jar"
+
