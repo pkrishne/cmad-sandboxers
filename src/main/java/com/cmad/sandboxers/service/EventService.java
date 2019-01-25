@@ -26,25 +26,28 @@ public class EventService implements EventAPI {
 	private EventRepository eventRepo;
 	
 	public List<EventV1> getEventList(int hours) {
-		long millis=System.currentTimeMillis();
-		long inmilli=hours*3600000;
+		long epochCur=System.currentTimeMillis()/1000;
 
+		long inTime=hours*3600;
 
+		//System.out.print(epochCur-inTime);
 		List<EventV1> eventList = new ArrayList<EventV1>();
-		eventList=eventRepo.findByTimestampAfter(millis-inmilli);
+		eventList=eventRepo.findByTimestampAfter(epochCur-inTime);
+
+		//System.out.print(eventList);
 		return eventList;
 	}
 
 	public EventCounters getEventCounters(int hours) {
-		long millis=System.currentTimeMillis();
-		long inmilli=hours*3600000;
+		long millis=System.currentTimeMillis()/1000;
+		long inmilli=hours*3600;
 
 		EventCounters ecnt=new EventCounters();
 
 		List<EventV1> eventList=eventRepo.findByTimestampAfter(millis-inmilli);
 		//List<EventV1> eventList=eventRepo.findAll();
 		for (EventV1 e : eventList) {
-			System.out.print(e);
+			//System.out.print(e);
 			EventType et= e.getEvent_type();
 			switch(et.getType()) {
 				case "ERROR":
@@ -55,6 +58,18 @@ public class EventService implements EventAPI {
 				break;
 				case "NOTIFICATION":
 					ecnt.incNotif();
+				break;
+
+				case "DEBUG":
+					ecnt.incDebug();
+				break;
+
+				case "INFO":
+					ecnt.incInfo();
+				break;
+
+				case "ALERT":
+					ecnt.incAlert();
 				break;
 
 			}

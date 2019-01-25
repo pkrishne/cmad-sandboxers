@@ -7,7 +7,7 @@ package com.cmad.sandboxers.model;
  */
 public enum EventType {
 	
-	ERROR("ERROR"), WARNING("WARNING"), NOTIFICATION("NOTIFICATION");
+	ERROR("ERROR"), WARNING("WARNING"), NOTIFICATION("NOTIFICATION"), ALERT("ALERT"),  INFO("INFO"), DEBUG("DEBUG");
 
 	private String type;
 
