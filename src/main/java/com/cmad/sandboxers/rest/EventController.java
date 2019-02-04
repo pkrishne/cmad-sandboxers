@@ -8,6 +8,7 @@ import com.cmad.sandboxers.service.EventService;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +23,7 @@ import org.springframework.data.domain.Pageable;
  */
 
 @RestController
+@CrossOrigin
 public class EventController {
 
 	@Autowired
@@ -32,7 +34,7 @@ public class EventController {
 	 * @return
 	 */
 	@RequestMapping(value = "/counters", method = RequestMethod.GET)
-	public ResponseEntity<EventCounters> getEventCounters(@RequestParam(value="hours",required=false) Integer hours, Pageable pageable) {
+	public ResponseEntity<EventCounters> getEventCounters(@RequestParam(value="hours",required=false,defaultValue = "24") Integer hours, Pageable pageable) {
 		System.out.println("Reached point");
 		EventCounters ec=service.getEventCounters(hours);
 		return new ResponseEntity<EventCounters>(ec,HttpStatus.OK);
@@ -44,7 +46,7 @@ public class EventController {
 	 * @return
 	 */
 	@RequestMapping(value = "/events", method = RequestMethod.GET)
-	public ResponseEntity<List<EventV1>> getEvents(@RequestParam(value="hours",required=false) Integer hours, Pageable pageinfo) {
+	public ResponseEntity<List<EventV1>> getEvents(@RequestParam(value="hours",required=false,defaultValue = "24") Integer hours, Pageable pageinfo) {
 		List<EventV1> e=service.getEventList(hours, pageinfo);
 
 		return new ResponseEntity<List<EventV1>>(e,HttpStatus.OK);
