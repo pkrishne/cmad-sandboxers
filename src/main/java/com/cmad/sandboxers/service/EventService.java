@@ -31,45 +31,45 @@ public class EventService implements EventAPI {
 		long inTime = hours * 3600;
 
 		// System.out.print(epochCur-inTime);
-		//List<EventV1> eventList = new ArrayList<EventV1>();
+		// List<EventV1> eventList = new ArrayList<EventV1>();
 		Page<EventV1> eventList3 = eventRepo.findByTimestampAfter((epochCur - inTime), pageInfo);
 
-		//System.out.print(eventList);
+		// System.out.print(eventList);
 		return eventList3.getContent();
 	}
 
 	public EventCounters getEventCounters(int hours) {
-		long millis=System.currentTimeMillis()/1000;
-		long inmilli=hours*3600;
+		long millis = System.currentTimeMillis() / 1000;
+		long inmilli = hours * 3600;
 
-		EventCounters ecnt=new EventCounters();
+		EventCounters ecnt = new EventCounters();
 
-		List<EventV1> eventList=eventRepo.findByTimestampAfter(millis-inmilli);
-		//List<EventV1> eventList=eventRepo.findAll();
+		List<EventV1> eventList = eventRepo.findByTimestampAfter(millis - inmilli);
+		// List<EventV1> eventList=eventRepo.findAll();
 		for (EventV1 e : eventList) {
-			//System.out.print(e);
-			EventType et= e.getEvent_type();
-			switch(et.getType()) {
-				case "ERROR":
-					ecnt.incError();
+			// System.out.print(e);
+			EventType et = e.getEvent_type();
+			switch (et.getType()) {
+			case "ERROR":
+				ecnt.incError();
 				break;
-				case "WARNING":
-					ecnt.incWarn();
+			case "WARNING":
+				ecnt.incWarn();
 				break;
-				case "NOTIFICATION":
-					ecnt.incNotif();
-				break;
-
-				case "DEBUG":
-					ecnt.incDebug();
+			case "NOTIFICATION":
+				ecnt.incNotif();
 				break;
 
-				case "INFO":
-					ecnt.incInfo();
+			case "DEBUG":
+				ecnt.incDebug();
 				break;
 
-				case "ALERT":
-					ecnt.incAlert();
+			case "INFO":
+				ecnt.incInfo();
+				break;
+
+			case "ALERT":
+				ecnt.incAlert();
 				break;
 
 			}
@@ -78,5 +78,65 @@ public class EventService implements EventAPI {
 		return ecnt;
 	}
 
+	@Override
+	public List<EventV1> getAllEventList() {
 
+		// System.out.print(epochCur-inTime);
+		// List<EventV1> eventList = new ArrayList<EventV1>();
+		List<EventV1> eventList = eventRepo.findAll();
+
+		// System.out.print(eventList);
+		return eventList;
+	}
+
+	@Override
+	public List<EventV1> getEventsOfDevices(List<String> device_list) {
+
+		// System.out.print(epochCur-inTime);
+		// List<EventV1> eventList = new ArrayList<EventV1>();
+		List<EventV1> eventList = eventRepo.findAllEventsofAssignedDevices(device_list);
+
+		// System.out.print(eventList);
+		return eventList;
+	}
+	
+	@Override
+	public EventCounters getEventCountersOfDevices(List<String> device_list) {
+
+
+		EventCounters ecnt = new EventCounters();
+
+		List<EventV1> eventList = eventRepo.findAllEventsofAssignedDevices(device_list);
+		// List<EventV1> eventList=eventRepo.findAll();
+		for (EventV1 e : eventList) {
+			// System.out.print(e);
+			EventType et = e.getEvent_type();
+			switch (et.getType()) {
+			case "ERROR":
+				ecnt.incError();
+				break;
+			case "WARNING":
+				ecnt.incWarn();
+				break;
+			case "NOTIFICATION":
+				ecnt.incNotif();
+				break;
+
+			case "DEBUG":
+				ecnt.incDebug();
+				break;
+
+			case "INFO":
+				ecnt.incInfo();
+				break;
+
+			case "ALERT":
+				ecnt.incAlert();
+				break;
+
+			}
+		}
+
+		return ecnt;
+	}
 }

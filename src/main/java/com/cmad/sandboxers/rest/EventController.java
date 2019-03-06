@@ -33,7 +33,7 @@ public class EventController {
 	 * @param hours - it's optional, by default, 24 is the value (i.e 24 hours data will be returned)
 	 * @return
 	 */
-	@RequestMapping(value = "/counters", method = RequestMethod.GET)
+	@RequestMapping(value = "counters", method = RequestMethod.GET)
 	public ResponseEntity<EventCounters> getEventCounters(@RequestParam(value="hours",required=false,defaultValue = "24") Integer hours, Pageable pageable) {
 		System.out.println("Reached point");
 		EventCounters ec=service.getEventCounters(hours);
@@ -45,7 +45,7 @@ public class EventController {
 	 * @param hours - it's optional, by default, 24 is the value (i.e 24 hours data will be returned)
 	 * @return
 	 */
-	@RequestMapping(value = "/events", method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<EventV1>> getEvents(@RequestParam(value="hours",required=false,defaultValue = "24") Integer hours, Pageable pageinfo) {
 		List<EventV1> e=service.getEventList(hours, pageinfo);
 

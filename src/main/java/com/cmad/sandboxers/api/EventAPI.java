@@ -30,4 +30,10 @@ public interface EventAPI {
 	 */
 	public EventCounters getEventCounters(int hours);
 
+	List<EventV1> getAllEventList();
+
+	List<EventV1> getEventsOfDevices(List<String> device_list);
+
+	EventCounters getEventCountersOfDevices(List<String> device_list);
+
 }

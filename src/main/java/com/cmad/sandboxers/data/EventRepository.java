@@ -7,6 +7,7 @@ import com.cmad.sandboxers.model.EventV1;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface EventRepository extends PagingAndSortingRepository<EventV1, Integer> {
+	
     public Page<EventV1> findByEventType(EventType eventtype, Pageable pageable);
     public Page<EventV1> findBySource(String source, Pageable pageable);
     public Page<EventV1> findById(Integer Id, Pageable pageable);
@@ -25,4 +27,8 @@ public interface EventRepository extends PagingAndSortingRepository<EventV1, Int
     public List<EventV1> findByTimestampAfter(Long l);
     public List<EventV1> findAll();
     public Page<EventV1> findAll(Pageable page);
+    
+    @Query(value="SELECT * FROM event e WHERE e.source in :deviceList",nativeQuery = true)
+    public List<EventV1> findAllEventsofAssignedDevices(List<String> deviceList);
+
 }
