@@ -6,7 +6,8 @@ steps:
 - name: 'gcr.io/cloud-builders/kubectl'
   args:
   - 'run'
-  - 'image'
+  - 'set'
+  - 'deployment/my-deployment'
   - 'my-container=gcr.io/cmad-project-sandboxers/cmad_backend_image'
   env:
   - 'CLOUDSDK_COMPUTE_ZONE=us-west1-c'
