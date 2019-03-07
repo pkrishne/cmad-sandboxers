@@ -5,11 +5,10 @@ steps:
   args: ["push", "gcr.io/cmad-project-sandboxers/cmad_backend_image"]
 - name: 'gcr.io/cloud-builders/kubectl'
   args:
-  - set
-  - image
-  - deployment
-  - cmad_backend
-  - [CONTAINER]=gcr.io/cmad-project-sandboxers/cmad_backend_image
+  - 'set'
+  - 'image'
+  - 'deployment/my-deployment'
+  - 'my-container=gcr.io/cmad-project-sandboxers/cmad_backend_image'
   env:
   - 'CLOUDSDK_COMPUTE_ZONE=us-west1-c'
   - 'CLOUDSDK_CONTAINER_CLUSTER=cmad-cluster'
