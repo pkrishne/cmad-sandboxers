@@ -90,11 +90,11 @@ public class EventService implements EventAPI {
 	}
 
 	@Override
-	public List<EventV1> getEventsOfDevices(List<String> device_list) {
+	public Page<EventV1> getEventsOfDevices(List<String> device_list,Pageable pageinfo) {
 
 		// System.out.print(epochCur-inTime);
 		// List<EventV1> eventList = new ArrayList<EventV1>();
-		List<EventV1> eventList = eventRepo.findAllEventsofAssignedDevices(device_list);
+		Page<EventV1> eventList = eventRepo.findAllEventsofAssignedDevices(device_list,pageinfo);
 
 		// System.out.print(eventList);
 		return eventList;
@@ -106,7 +106,7 @@ public class EventService implements EventAPI {
 
 		EventCounters ecnt = new EventCounters();
 
-		List<EventV1> eventList = eventRepo.findAllEventsofAssignedDevices(device_list);
+		List<EventV1> eventList = eventRepo.findAllEventsofAssignedDevices(device_list,null).getContent();
 		// List<EventV1> eventList=eventRepo.findAll();
 		for (EventV1 e : eventList) {
 			// System.out.print(e);

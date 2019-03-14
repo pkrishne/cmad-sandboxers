@@ -1,6 +1,7 @@
 package com.cmad.sandboxers.api;
 
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
@@ -32,8 +33,8 @@ public interface EventAPI {
 
 	List<EventV1> getAllEventList();
 
-	List<EventV1> getEventsOfDevices(List<String> device_list);
-
 	EventCounters getEventCountersOfDevices(List<String> device_list);
+
+	Page<EventV1> getEventsOfDevices(List<String> device_list, Pageable pageinfo);
 
 }

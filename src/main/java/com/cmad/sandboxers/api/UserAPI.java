@@ -1,6 +1,7 @@
 package com.cmad.sandboxers.api;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.cmad.sandboxers.model.Operator;
 
@@ -11,7 +12,7 @@ import com.cmad.sandboxers.model.Operator;
  */
 public interface UserAPI {
 
-	public List<Operator> getAllOperators();
+	public Page<Operator> getAllOperators(Pageable page);
 	
 	public boolean createOperator(Operator operator);
 	

@@ -29,6 +29,6 @@ public interface EventRepository extends PagingAndSortingRepository<EventV1, Int
     public Page<EventV1> findAll(Pageable page);
     
     @Query(value="SELECT * FROM event e WHERE e.source in :deviceList",nativeQuery = true)
-    public List<EventV1> findAllEventsofAssignedDevices(List<String> deviceList);
+    public Page<EventV1> findAllEventsofAssignedDevices(List<String> deviceList,Pageable pageable);
 
 }

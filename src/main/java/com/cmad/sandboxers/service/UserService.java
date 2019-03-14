@@ -1,9 +1,10 @@
 package com.cmad.sandboxers.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 import com.cmad.sandboxers.api.UserAPI;
 import com.cmad.sandboxers.data.UserRepository;
 import com.cmad.sandboxers.model.Operator;
@@ -20,8 +21,8 @@ public class UserService implements UserAPI {
 	private UserRepository userRepo;
 
 	@Override
-	public List<Operator> getAllOperators() {
-		List<Operator> dataList = userRepo.findAll();
+	public Page<Operator> getAllOperators(Pageable page) {
+		Page<Operator> dataList = userRepo.findAll(page);
 		return dataList;
 	}
 

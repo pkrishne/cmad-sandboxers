@@ -1,8 +1,8 @@
 package com.cmad.sandboxers.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.cmad.sandboxers.api.DeviceAPI;
@@ -24,7 +24,7 @@ public class DeviceService implements DeviceAPI {
 	public boolean addNewDevice(Device device) {
 		
 		//TODO -- add check, before inserting, if device is already present.
-		deviceRepo.insert(device);
+		deviceRepo.save(device);
 		return true;
 	}
 
@@ -35,9 +35,9 @@ public class DeviceService implements DeviceAPI {
 	}
 
 	@Override
-	public List<Device> getDeviceList() {
+	public Page<Device> getDeviceList(Pageable pageinfo) {
 		
-		List<Device> deviceList = deviceRepo.findAll();
+		Page<Device> deviceList = deviceRepo.findAll(pageinfo);
 		return deviceList;
 	}
 
