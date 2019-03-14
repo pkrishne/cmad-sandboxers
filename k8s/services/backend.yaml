@@ -17,6 +17,7 @@ apiVersion: v1
 metadata:
   name: cmad-backend
 spec:
+  type: LoadBalancer
   ports:
   - name: http
     port: 8080
