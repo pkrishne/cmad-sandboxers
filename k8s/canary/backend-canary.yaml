@@ -32,7 +32,7 @@ spec:
         resources:
           limits:
             memory: "1Gi"
-            cpu: "200m"
+            cpu: "100m"
         imagePullPolicy: Always
         ports:
         - name: backend
