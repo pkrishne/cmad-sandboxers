@@ -1,6 +1,7 @@
 package com.cmad.sandboxers.api;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.cmad.sandboxers.model.Device;
 
@@ -11,9 +12,9 @@ import com.cmad.sandboxers.model.Device;
  */
 public interface DeviceAPI {
 
-	public boolean addNewDevice(Device device);
+	boolean addNewDevice(Device device);
 	
-	public boolean removeDevice(String device_ip);
-	
-	public List<Device> getDeviceList();
+	boolean removeDevice(String device_ip);
+
+	Page<Device> getDeviceList(Pageable pageinfo);
 }

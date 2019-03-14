@@ -13,7 +13,7 @@ WORKDIR /opt
 
 COPY --from=build /opt/target/*.jar app
 
-EXPOSE 19191
+EXPOSE 8080
 
 CMD java -jar app
 

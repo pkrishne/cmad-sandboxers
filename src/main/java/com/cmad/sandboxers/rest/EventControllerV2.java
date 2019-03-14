@@ -1,9 +1,17 @@
 package com.cmad.sandboxers.rest;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -54,18 +62,37 @@ public class EventControllerV2 {
 	 *              will be returned)
 	 * @return
 	 */
-	@RequestMapping(value = "syslog/", method = RequestMethod.GET)
+	@RequestMapping(value = "syslog", method = RequestMethod.GET)
 	public ResponseEntity<List<EventV1>> getEvents(@RequestParam(value = "hours", required = false) Integer hours,
-			Pageable pageinfo, @CurrentUser UserPrincipal currentUser) {
+			@RequestParam(value="range",required=false) String range, @CurrentUser UserPrincipal currentUser) {
 
-		List<EventV1> e;
+		Page<EventV1> resultPage;
 
 		List<String> device_list = currentUser.getManagedDeviceList();
 
-		System.out.println("Roles are:" + currentUser.getAuthorities());
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Access-Control-Expose-Headers", "Content-Range");
 
-		e = service.getEventsOfDevices(device_list);
+		// construct pagination Info here, if provided.
+		if (range != null) {
+			String start_end_index = range.substring(1, range.length() - 1);
 
-		return new ResponseEntity<List<EventV1>>(e, HttpStatus.OK);
+			String[] indexArray = start_end_index.split(",");
+
+			Pageable page = PageRequest.of(Integer.valueOf(indexArray[0]) / 10, 10, Direction.DESC, "timestamp");
+
+			resultPage = service.getEventsOfDevices(device_list, page);
+
+			headers.add("Content-Range", "syslog "+start_end_index+"/" + String.valueOf(resultPage.getTotalElements()));
+
+		}
+
+		else {
+			resultPage = service.getEventsOfDevices(device_list, null);
+			headers.add("Content-Range", "syslog /" + String.valueOf(resultPage.getTotalElements()));
+
+		}
+
+		return new ResponseEntity<List<EventV1>>(resultPage.getContent(), headers, HttpStatus.OK);
 	}
 }
