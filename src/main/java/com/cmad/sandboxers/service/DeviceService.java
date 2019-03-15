@@ -1,5 +1,7 @@
 package com.cmad.sandboxers.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,14 +32,22 @@ public class DeviceService implements DeviceAPI {
 
 	@Override
 	public boolean removeDevice(String device_ip) {
-		boolean result = deviceRepo.deleteByDeviceIPAddress(device_ip);
-		return result;
+		deviceRepo.deleteByDeviceIPAddress(device_ip);
+		return true;
 	}
 
 	@Override
-	public Page<Device> getDeviceList(Pageable pageinfo) {
+	public Page<Device> getDeviceList(Pageable pageinfo,boolean isAdmin,List<String> userDeviceList) {
 		
-		Page<Device> deviceList = deviceRepo.findAll(pageinfo);
+		Page<Device> deviceList;
+		if(isAdmin) {
+			deviceList = deviceRepo.findAll(pageinfo);
+			
+		}
+		else {
+			deviceList = deviceRepo.findByIPAddressIn(userDeviceList,pageinfo);
+		}
+		
 		return deviceList;
 	}
 

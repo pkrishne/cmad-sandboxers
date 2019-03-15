@@ -17,4 +17,7 @@ public interface UserRepository extends MongoRepository<Operator, ObjectId> {
 
 	@Query(value = "{'user_id' : ?0}")
 	public Operator getUserById(String user_id);
+	
+	@Query(value = "{'user_id' : ?0}", delete = true)
+	public void removeUser(String user_id);
 }

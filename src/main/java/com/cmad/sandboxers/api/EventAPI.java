@@ -35,6 +35,6 @@ public interface EventAPI {
 
 	EventCounters getEventCountersOfDevices(List<String> device_list);
 
-	Page<EventV1> getEventsOfDevices(List<String> device_list, Pageable pageinfo);
+	Page<EventV1> getEventsOfDevices(List<String> device_list, String search_str, Pageable pageinfo);
 
 }

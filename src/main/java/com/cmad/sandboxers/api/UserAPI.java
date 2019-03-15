@@ -17,4 +17,6 @@ public interface UserAPI {
 	public boolean createOperator(Operator operator);
 	
 	public boolean assignDevicesToOperator(String operator_id, String device_ip);
+
+	public boolean removeOperator(String user_id);
 }

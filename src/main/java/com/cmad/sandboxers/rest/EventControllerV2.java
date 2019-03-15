@@ -1,10 +1,6 @@
 package com.cmad.sandboxers.rest;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -64,9 +60,23 @@ public class EventControllerV2 {
 	 */
 	@RequestMapping(value = "syslog", method = RequestMethod.GET)
 	public ResponseEntity<List<EventV1>> getEvents(@RequestParam(value = "hours", required = false) Integer hours,
-			@RequestParam(value="range",required=false) String range, @CurrentUser UserPrincipal currentUser) {
+			@RequestParam(value="filter",required=false) String filter, @RequestParam(value="range",required=false) String range, @CurrentUser UserPrincipal currentUser) {
 
 		Page<EventV1> resultPage;
+		
+		String search_str="";
+		
+	
+		if(filter!= null && filter.length() > 0) {
+			
+			
+			String[] search_str_array = filter.split(":");
+			
+			if(search_str_array.length >1) {
+				search_str = search_str_array[1].substring(1, search_str_array[1].length()-2);
+			}
+			
+		}
 
 		List<String> device_list = currentUser.getManagedDeviceList();
 
@@ -81,14 +91,15 @@ public class EventControllerV2 {
 
 			Pageable page = PageRequest.of(Integer.valueOf(indexArray[0]) / 10, 10, Direction.DESC, "timestamp");
 
-			resultPage = service.getEventsOfDevices(device_list, page);
+			System.out.println("Filter is:"+search_str);
+			resultPage = service.getEventsOfDevices(device_list, search_str,page);
 
 			headers.add("Content-Range", "syslog "+start_end_index+"/" + String.valueOf(resultPage.getTotalElements()));
 
 		}
 
 		else {
-			resultPage = service.getEventsOfDevices(device_list, null);
+			resultPage = service.getEventsOfDevices(device_list, "",null);
 			headers.add("Content-Range", "syslog /" + String.valueOf(resultPage.getTotalElements()));
 
 		}
