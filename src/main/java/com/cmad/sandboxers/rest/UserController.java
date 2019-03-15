@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -39,6 +40,13 @@ public class UserController {
 	public ResponseEntity<Boolean> addUser(@RequestBody Operator user) {
 
 		boolean result = userService.createOperator(user);
+		return new ResponseEntity<Boolean>(result, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/{user_id}",method=RequestMethod.DELETE)
+	public ResponseEntity<Boolean> deleteDevice(@PathVariable("user_id") String user_id){
+		
+		boolean result = userService.removeOperator(user_id);
 		return new ResponseEntity<Boolean>(result, HttpStatus.OK);
 	}
 

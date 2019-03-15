@@ -36,6 +36,12 @@ public class UserService implements UserAPI {
 	}
 
 	@Override
+	public boolean removeOperator(String user_id) {
+		
+		userRepo.removeUser(user_id);
+		return true;
+	}
+	@Override
 	public boolean assignDevicesToOperator(String operator_id, String device_ip) {
 		// TODO Auto-generated method stub
 		return false;

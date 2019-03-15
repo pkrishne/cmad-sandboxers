@@ -27,6 +27,8 @@ public class UserPrincipal implements UserDetails {
 	private String username;
 
 	private List<String> managedDeviceList;
+	
+	private boolean admin;
 
 	@JsonIgnore
 	private String email;
@@ -37,7 +39,7 @@ public class UserPrincipal implements UserDetails {
 	private Collection<? extends GrantedAuthority> authorities;
 
 	public UserPrincipal(ObjectId id, String name, String username, String email, String password,
-			List<String> managedDeviceList, Collection<? extends GrantedAuthority> authorities) {
+			List<String> managedDeviceList, Collection<? extends GrantedAuthority> authorities,boolean admin) {
 
 		this.id = id;
 		this.name = name;
@@ -46,6 +48,7 @@ public class UserPrincipal implements UserDetails {
 		this.password = password;
 		this.managedDeviceList = managedDeviceList;
 		this.authorities = authorities;
+		this.admin = admin;
 	}
 
 	public static UserPrincipal create(Operator user) {
@@ -62,7 +65,7 @@ public class UserPrincipal implements UserDetails {
 
 		return new UserPrincipal(user.get_id(), user.getFirst_name(), user.getId(), user.getEmail(), user.getPassword(),
 
-				managedDeviceList, authorities);
+				managedDeviceList, authorities,user.isAdmin());
 	}
 
 	public ObjectId getId() {
@@ -94,6 +97,10 @@ public class UserPrincipal implements UserDetails {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return authorities;
+	}
+
+	public boolean isAdmin() {
+		return admin;
 	}
 
 	@Override
